@@ -117,12 +117,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         moves++;
         textViewMoveCounter.setText(String.valueOf(moves));
         
-        if (Arrays.equals(board, puzzle.finishedPuzzle)) {
+        if (gameOver()) {
             // if the game is finished
             Toast.makeText(this, "You Win!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    
+    private boolean gameOver() {
+        for (int i = 0; i < puzzle.boardLength; i++) {
+            if (!(Arrays.equals(puzzle.board[i], puzzle.finishedPuzzle[i]))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }
