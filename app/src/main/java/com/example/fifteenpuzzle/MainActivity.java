@@ -1,10 +1,14 @@
 package com.example.fifteenpuzzle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,12 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         adView.loadAd(adRequest);
-
-//        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-//            @Override
-//            public void onInitializationComplete(InitializationStatus initializationStatus) {
-//            }
-//        });
 
         puzzle = new SlidePuzzle();
         board = puzzle.getBoard();
@@ -152,5 +150,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.takePicture:
+                Toast.makeText(this, "Take a picture to turn into a puzzle.", Toast.LENGTH_SHORT).show();
+                return true;
+            case (R.id.solveForMe):
+                Toast.makeText(this, "Solving the puzzle... the correct way.", Toast.LENGTH_SHORT).show();
+                solveSlidePuzzle();
+                return true;
+            case (R.id.resetBoard):
+                Toast.makeText(this, "Resetting board", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return false;
+    }
+
+    private void solveSlidePuzzle() {
+    }
 
 }

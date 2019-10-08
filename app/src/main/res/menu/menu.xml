@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/takePicture"
+        android:title="Take a Picture"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/solveForMe"
+        android:title="Solve For Me"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/resetBoard"
+        android:title="Reset Board"
+        app:showAsAction="never"
+        />
+
+
+
+</menu>
