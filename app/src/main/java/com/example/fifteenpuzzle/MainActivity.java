@@ -32,17 +32,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-
-//                String buttonId = "button" + i + j;
-//                Button button = (Button)findViewById(getResources().getIdentifier(buttonId, "id", getPackageName()));
-//                button.setText(Integer.toString(board[i][j]));
-//                button.setOnClickListener((View.OnClickListener) this);
-
                 String buttonId = "button" + i + j;
                 int resourceId = getResources().getIdentifier(buttonId, "id", getPackageName());
                 buttons[i][j] = findViewById(resourceId);
                 buttons[i][j].setText(Integer.toString(board[i][j]));
                 buttons[i][j].setOnClickListener(this);
+                if (buttons[i][j].getText().toString().equals("0")) {
+                    buttons[i][j].setVisibility(Button.INVISIBLE);
+                } else {
+                    buttons[i][j].setVisibility(Button.VISIBLE);
+                }
             }
         }
 
@@ -111,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 buttons[i][j] = findViewById(resourceId);
                 buttons[i][j].setText(Integer.toString(board[i][j]));
                 buttons[i][j].setOnClickListener(this);
+                if (buttons[i][j].getText().toString().equals("0")) {
+                    buttons[i][j].setVisibility(Button.INVISIBLE);
+                } else {
+                    buttons[i][j].setVisibility(Button.VISIBLE);
+                }
             }
         }
         // update move counter
