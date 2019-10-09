@@ -1,10 +1,7 @@
 package com.example.fifteenpuzzle;
 
-import android.graphics.Color;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,11 +10,12 @@ public class SlidePuzzle {
     public int boardLength = board.length;
     private int moveCount = 0;
     public int[][] finishedPuzzle = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
-    private MainActivity mainActivity;
+    private MainActivity game;
+    private List<int[][]> movesSequence = new ArrayList<>();
 
 
-    public void setMainActivity(MainActivity activity) {
-        mainActivity = activity;
+    public void setMainActivity(MainActivity a) {
+        game = a;
     }
 
     public int[][] getBoard() {
@@ -130,8 +128,9 @@ public class SlidePuzzle {
             board[numCoordinates[0] - 1][numCoordinates[1]] = board[numCoordinates[0]][numCoordinates[1]];
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
+            game.updateBoard();
+            movesSequence.add(board);
         }
-        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -142,8 +141,9 @@ public class SlidePuzzle {
             board[numCoordinates[0]][numCoordinates[1] - 1] = board[numCoordinates[0]][numCoordinates[1]];
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
+            game.updateBoard();
+            movesSequence.add(board);
         }
-        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -154,8 +154,9 @@ public class SlidePuzzle {
             board[numCoordinates[0] + 1][numCoordinates[1]] = board[numCoordinates[0]][numCoordinates[1]];
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
+            game.updateBoard();
+            movesSequence.add(board);
         }
-        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -166,8 +167,9 @@ public class SlidePuzzle {
             board[numCoordinates[0]][numCoordinates[1] + 1] = board[numCoordinates[0]][numCoordinates[1]];
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
+            game.updateBoard();
+            movesSequence.add(board);
         }
-        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -548,6 +550,8 @@ public class SlidePuzzle {
     }
 
     public void solveSlidePuzzle() {
+        movesSequence = new ArrayList<>();
+
         solveFor(1);
         solveFor(2);
         solveFor(3);
@@ -564,13 +568,5 @@ public class SlidePuzzle {
         solveFor(14);
         solveFor(15);
 
-    }
-
-    public void delayMovement() {
-        try {
-            Thread.sleep(200);                 //1500 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
     }
 }

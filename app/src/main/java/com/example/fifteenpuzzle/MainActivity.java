@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button[][] buttons = new Button[4][4];
     private int moves = 0;
     private TextView textViewMoveCounter;
+    private MainActivity game;
+
 
 
     @Override
@@ -136,6 +138,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void updateBoard(int[][] currentBoard) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                String buttonId = "button" + i + j;
+                int resourceId = getResources().getIdentifier(buttonId, "id", getPackageName());
+                buttons[i][j] = findViewById(resourceId);
+                buttons[i][j].setText(Integer.toString(currentBoard[i][j]));
+                buttons[i][j].setOnClickListener(this);
+                if (buttons[i][j].getText().toString().equals("0")) {
+                    buttons[i][j].setVisibility(Button.INVISIBLE);
+                } else {
+                    buttons[i][j].setVisibility(Button.VISIBLE);
+                }
+            }
+        }
+        // update move counter
+        moves++;
+        textViewMoveCounter.setText(String.valueOf(moves));
+
+        if (gameOver()) {
+            // if the game is finished
+            Toast.makeText(this, "You Win!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private boolean gameOver() {
         for (int i = 0; i < puzzle.boardLength; i++) {
             if (!(Arrays.equals(puzzle.board[i], puzzle.finishedPuzzle[i]))) {
@@ -155,20 +182,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.takePicture:
-                Toast.makeText(this, "Take a picture to turn into a puzzle.", Toast.LENGTH_SHORT).show();
-                return true;
             case (R.id.solveForMe):
                 Toast.makeText(this, "Solving the puzzle... the correct way.", Toast.LENGTH_SHORT).show();
                 puzzle.solveSlidePuzzle();
                 return true;
             case (R.id.resetBoard):
                 Toast.makeText(this, "Resetting board", Toast.LENGTH_SHORT).show();
+                resetBoard();
                 return true;
         }
         return false;
     }
 
+    public void resetBoard() {
+        puzzle = new SlidePuzzle();
+        board = puzzle.getBoard();
+        puzzle.setMainActivity(this);
+        moves = 0;
+        textViewMoveCounter.setText(String.valueOf(moves));
 
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                String buttonId = "button" + i + j;
+                int resourceId = getResources().getIdentifier(buttonId, "id", getPackageName());
+                buttons[i][j] = findViewById(resourceId);
+                buttons[i][j].setText(Integer.toString(board[i][j]));
+                buttons[i][j].setOnClickListener(this);
+                if (buttons[i][j].getText().toString().equals("0")) {
+                    buttons[i][j].setVisibility(Button.INVISIBLE);
+                } else {
+                    buttons[i][j].setVisibility(Button.VISIBLE);
+                }
+            }
+        }
+    }
 
 }
