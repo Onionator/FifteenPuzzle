@@ -25,10 +25,11 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SlidePuzzle puzzle;
-    private int[][] board;
+    public int[][] board;
     private Button[][] buttons = new Button[4][4];
     private int moves = 0;
     private TextView textViewMoveCounter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         puzzle = new SlidePuzzle();
         board = puzzle.getBoard();
         textViewMoveCounter = findViewById(R.id.counter);
+        puzzle.setMainActivity(this);
 
 
         for (int i = 0; i < 4; i++) {
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (board[clickedButton[0] - 1][clickedButton[1]] == 0) {
                     Log.i("The number can move up", "move up");
                     puzzle.moveUp(board[clickedButton[0]][clickedButton[1]]);
-                    updateBoard();
                     ((Button) v).setText("0");
                     break;
                 }
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (board[clickedButton[0]][clickedButton[1] - 1] == 0) {
                     Log.i("The number can move left", "move left");
                     puzzle.moveLeft(board[clickedButton[0]][clickedButton[1]]);
-                    updateBoard();
                     ((Button) v).setText("0");
                     break;
                 }
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (board[clickedButton[0]][clickedButton[1] + 1] == 0) {
                     Log.i("The number can move right", "move right");
                     puzzle.moveRight(board[clickedButton[0]][clickedButton[1]]);
-                    updateBoard();
                     ((Button) v).setText("0");
                     break;
                 }
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (board[clickedButton[0] + 1][clickedButton[1]] == 0) {
                     Log.i("The number can move down", "move down");
                     puzzle.moveDown(board[clickedButton[0]][clickedButton[1]]);
-                    updateBoard();
                     ((Button) v).setText("0");
                     break;
                 }
@@ -134,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // update move counter
         moves++;
         textViewMoveCounter.setText(String.valueOf(moves));
-        
+
         if (gameOver()) {
             // if the game is finished
             Toast.makeText(this, "You Win!", Toast.LENGTH_SHORT).show();
@@ -165,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case (R.id.solveForMe):
                 Toast.makeText(this, "Solving the puzzle... the correct way.", Toast.LENGTH_SHORT).show();
-                solveSlidePuzzle();
+                puzzle.solveSlidePuzzle();
                 return true;
             case (R.id.resetBoard):
                 Toast.makeText(this, "Resetting board", Toast.LENGTH_SHORT).show();
@@ -174,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    private void solveSlidePuzzle() {
-    }
+
 
 }

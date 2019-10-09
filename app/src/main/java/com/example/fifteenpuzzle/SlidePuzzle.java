@@ -1,17 +1,23 @@
 package com.example.fifteenpuzzle;
 
+import android.graphics.Color;
+
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class SlidePuzzle {
-    int[][] board = newBoard();
-    int boardLength = board.length;
-    int moveCount = 0;
-    int[][] finishedPuzzle = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
+    public int[][] board = newBoard();
+    public int boardLength = board.length;
+    private int moveCount = 0;
+    public int[][] finishedPuzzle = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
+    private MainActivity mainActivity;
 
-    protected SlidePuzzle() {
 
+    public void setMainActivity(MainActivity activity) {
+        mainActivity = activity;
     }
 
     public int[][] getBoard() {
@@ -125,6 +131,7 @@ public class SlidePuzzle {
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
         }
+        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -136,6 +143,7 @@ public class SlidePuzzle {
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
         }
+        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -147,6 +155,7 @@ public class SlidePuzzle {
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
         }
+        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -158,6 +167,7 @@ public class SlidePuzzle {
             board[numCoordinates[0]][numCoordinates[1]] = tempNum;
             setMoveCount(getMoveCount() + 1);
         }
+        mainActivity.updateBoard();
         System.out.println(printBoard());
     }
 
@@ -534,6 +544,33 @@ public class SlidePuzzle {
                     moveUp(0);
                 }
             }
+        }
+    }
+
+    public void solveSlidePuzzle() {
+        solveFor(1);
+        solveFor(2);
+        solveFor(3);
+        solveFor(4);
+        solveFor(5);
+        solveFor(9);
+        solveFor(13);
+        solveFor(6);
+        solveFor(7);
+        solveFor(8);
+        solveFor(10);
+        solveFor(11);
+        solveFor(12);
+        solveFor(14);
+        solveFor(15);
+
+    }
+
+    public void delayMovement() {
+        try {
+            Thread.sleep(200);                 //1500 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
         }
     }
 }
