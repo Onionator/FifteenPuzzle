@@ -218,13 +218,6 @@
             android:textAlignment="center"
             />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Swipe to see completed puzzle."
-            android:textAlignment="center"
-            />
-
     </LinearLayout>
 
     <RelativeLayout
