@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fifteenpuzzle">
+    package="com.slidepuzzle.fifteenpuzzle">
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1223628147147596~6316658424"/>
-        <activity android:name=".MainActivity">
+        <activity android:name="com.slidepuzzle.fifteenpuzzle.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
